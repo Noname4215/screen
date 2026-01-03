@@ -49,23 +49,6 @@
         animation: pulse 2.5s infinite;
     }
 
-    #progress-bar {
-        width: 100%;
-        background-color: #222;
-        border: 1px solid #aaa;
-        height: 24px;
-        margin-bottom: 10px;
-        overflow: hidden;
-        border-radius: 5px;
-    }
-
-    #progress {
-        width: 0%;
-        height: 100%;
-        background-color: #fff;
-        transition: width 0.4s ease;
-        animation: glitch-bar 0.3s infinite alternate;
-    }
 
     #details {
         font-size: 1em;
@@ -99,10 +82,6 @@
         100% { transform: translate(0); }
     }
 
-    @keyframes glitch-bar {
-        0% { transform: skew(0deg); }
-        100% { transform: skew(5deg); }
-    }
 
     @keyframes pulse {
         0%, 100% { transform: scale(1); opacity: 0.9; }
@@ -159,9 +138,6 @@
         </map>
         <div id="servername" bis_skin_checked="1">ZTOWN</div>
         <div id="status" bis_skin_checked="1">Loading map: %mapname%</div>
-        <div id="progress-bar" bis_skin_checked="1">
-            <div id="progress" bis_skin_checked="1"></div>
-        </div>
         <div id="details" bis_skin_checked="1">Waiting for sex with dog ...</div>
     </div>
 
@@ -266,21 +242,11 @@
         let finished = false;
         let val = 0;
 
-        const progress = document.getElementById("progress");
         const status = document.getElementById("status");
         const details = document.getElementById("details");
         const servername = document.getElementById("servername");
 
         function clamp(num){ return Math.min(Math.max(num, 0), 1); }
-
-        function updateProgress() {
-            let left = finished ? 0 :
-                clamp(leftFiles / (totalFiles || 1)) * 0.3 +
-                clamp(leftWS / (totalWS || 1)) * 0.6;
-            val = 1 - left;
-            if (leftFiles === 0 && leftWS === 0) val = 1;
-            progress.style.width = (val * 100).toFixed(1) + "%";
-        }
 
         // --- Эти функции вызываются GMod во время загрузки ---
         function SetStatusChanged(str) {
@@ -289,25 +255,21 @@
                 finished = true;
                 status.innerText = "Joining the nightmare...";
             }
-            updateProgress();
         }
 
         function SetFilesTotal(num) {
             totalFiles = num;
             leftFiles = num;
-            updateProgress();
         }
 
         function DownloadingFile(name) {
             leftFiles--;
             details.innerText = "Downloading: " + name;
-            updateProgress();
         }
 
         function SetFilesNeeded(num) {
             totalWS = num;
             leftWS = num;
-            updateProgress();
         }
 
         // GMod заменяет %mapname% и %servername% в URL загрузочного экрана
