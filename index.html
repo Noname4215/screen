@@ -275,9 +275,11 @@
         // GMod replaces %mapname% and %servername% in the loading screen URL
         // they can be extracted for display:
         const params = new URLSearchParams(window.location.search);
-        const map = params.get("mapname") || window.mapname || "%mapname%";
-        const name = params.get("servername") || window.servername || "XCITY";
-        servername.innerText = name || "XCITY Server";
+        const initialMap = status.innerText.replace("Loading map: ", "");
+        const initialName = servername.innerText;
+        const map = params.get("mapname") || initialMap || "%mapname%";
+        const name = params.get("servername") || initialName || "XCITY";
+        servername.innerText = name;
         status.innerText = "Loading map: " + map;
     </script>
 
