@@ -272,21 +272,14 @@
             leftWS = num;
         }
 
-const params = new URLSearchParams(window.location.search);
-let map = params.get("mapname");
-let name = params.get("servername");
-
-// Если параметры пустые или это шаблон - ставим дефолт
-if (!map || map === "%mapname%" || map === "") {
-    map = "Загрузка...";
-}
-
-if (!name || name === "%servername%" || name === "") {
-    name = "XCITY Server";
-}
-
-servername.innerText = name;
-status.innerText = "Loading map: " + map;
+        // GMod replaces %mapname% and %servername% in the loading screen URL
+        // they can be extracted for display:
+        const params = new URLSearchParams(window.location.search);
+        const map = params.get("mapname") || window.mapname || "%mapname%";
+        const name = params.get("servername") || window.servername || "XCITY";
+        servername.innerText = name || "XCITY Server";
+        status.innerText = "Loading map: " + map;
+    </script>
 
 
 <div class="thought" bis_skin_checked="1" style="left: 1487.39px; top: 82.8015px;">У НЕГО НОЖ!</div><div class="thought" bis_skin_checked="1" style="left: 1675.72px; top: 349.998px;">Рубич наверна женщино чтооо?*??</div><div class="thought" bis_skin_checked="1" style="left: 1050.51px; top: 856.302px;">жить свободно мне мешает уголовный кодекс</div><div class="thought" bis_skin_checked="1" style="left: 1375.98px; top: 385.463px;">пьяная мамка под столом</div><div class="thought" bis_skin_checked="1" style="left: 235.009px; top: 652.617px;">Джампскаут Чарли Кирка</div><div class="thought" bis_skin_checked="1" style="left: 1677.74px; top: 432.506px;">Дзюнко Футанари.</div><div class="thought" bis_skin_checked="1" style="left: 15.7074px; top: 801.122px;">НОЗДРИ СОБАКИ</div><div class="thought" style="left: 995.636px; top: 657.593px;">Убить ребёнка инвалида кирпичём..</div><div class="thought" style="left: 696.579px; top: 505.17px;">молодЧИНА</div></body></html>
